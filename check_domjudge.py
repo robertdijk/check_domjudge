@@ -315,6 +315,7 @@ if __name__ == '__main__':
 
         if args.check == 'num_queue':
             statuses = read_status()
+            max_queue = 0
             for status in statuses:
                 if args.critical is not None and status['num_queued'] >= args.critical:
                     critical(f"Contest {status['cid']} has a queue of {status['num_queued']}")
@@ -322,7 +323,8 @@ if __name__ == '__main__':
                     warning(f"Contest {status['cid']} has a queue of {status['num_queued']}")
                 else:
                     ok(f"Contest {status['cid']} has a queue of {status['num_queued']}")
-            performance("num_queue", status['num_queued'], min=0, warn=args.warning, crit=args.critical)
+                max_queue = max(max_queue, status['num_queued'])
+            performance("num_queue", max_queue, min=0, warn=args.warning, crit=args.critical)
 
     except Exception as e:
         unknown(str(e))
