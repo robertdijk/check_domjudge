@@ -302,7 +302,7 @@ if __name__ == '__main__':
                 if judgehost['polltime'] is None:
                     unknown(f"{judgehost['hostname']} never checked in")
                 else:
-                    polltime = datetime.datetime.fromtimestamp(judgehost['polltime'])
+                    polltime = datetime.datetime.fromtimestamp(int(float(judgehost['polltime'])))
                     reltime = datetime.datetime.now() - polltime
                     if args.critical is not None and reltime.total_seconds() >= args.critical:
                         critical(f"{judgehost['hostname']} last checked in {int(reltime.total_seconds())} seconds ago")
